@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+﻿import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Calendar, User, Shield, Stethoscope, LogIn, UserPlus, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -187,7 +187,7 @@ function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full px-3 py-2.5 border border-slate-800 bg-slate-900 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm transition pr-10"
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                 />
                 <button
                   type="button"
@@ -215,7 +215,7 @@ function LoginPage() {
             </button>
           </form>
 
-          {/* Local Testing Helper Credentials — only visible in dev builds, stripped in production */}
+          {/* Local Testing Helper Credentials â€” only visible in dev builds, stripped in production */}
           {import.meta.env.DEV && (
             <div className="mt-8 border-t border-slate-800 pt-6">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-3">
@@ -343,7 +343,7 @@ function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 border border-slate-800 bg-slate-900 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm transition"
-                placeholder="••••••••"
+                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
               />
             </div>
 
@@ -481,7 +481,7 @@ function PatientDashboard() {
   const { token } = useAuth();
 
   const handleCalendarConnect = () => {
-    window.location.href = `http://localhost:5000/api/auth/google/connect?token=${token}`;
+    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/auth/google/connect?token=${token}`;
   };
 
   const handleCalendarDisconnect = async () => {
@@ -639,7 +639,7 @@ function PatientDashboard() {
         <div className="mb-6 bg-slate-900 border border-brand-500/20 p-6 rounded-2xl relative shadow-2xl">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4 mb-4">
             <div>
-              <span className="text-xs uppercase tracking-wider font-bold text-brand-500">Hold Active — Complete Form</span>
+              <span className="text-xs uppercase tracking-wider font-bold text-brand-500">Hold Active â€” Complete Form</span>
               <h4 className="text-lg font-bold text-white mt-0.5">Slot with {heldSlot.doctorName} ({heldSlot.specialisation})</h4>
               <p className="text-xs text-slate-400 mt-1 font-mono">{heldSlot.date} @ {heldSlot.startTime} - {heldSlot.endTime}</p>
             </div>
@@ -699,7 +699,7 @@ function PatientDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          {/* ── Upcoming Appointments ─────────────────────────────── */}
+          {/* â”€â”€ Upcoming Appointments â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div className="glass-panel p-6 rounded-2xl">
             <h3 className="text-xl font-bold mb-4">Upcoming Appointments</h3>
             {appointmentsLoading ? (
@@ -813,13 +813,13 @@ function PatientDashboard() {
                                   {rescheduleSlots.map(slot => (
                                     <button key={slot.id} onClick={() => handleConfirmReschedule(appt.id, slot.id)}
                                       className="text-[10px] font-mono p-2 border border-slate-700 hover:border-brand-500 hover:text-brand-300 rounded-lg transition text-slate-300 text-center">
-                                      {slot.date}<br/>{slot.startTime}–{slot.endTime}
+                                      {slot.date}<br/>{slot.startTime}â€“{slot.endTime}
                                     </button>
                                   ))}
                                 </div>
                               )}
                               <button onClick={(e) => { e.stopPropagation(); setReschedulingApptId(null); setRescheduleSlots([]); setRescheduleError(''); }}
-                                className="mt-2 text-[10px] text-slate-500 hover:text-slate-300 transition">✕ Close</button>
+                                className="mt-2 text-[10px] text-slate-500 hover:text-slate-300 transition">âœ• Close</button>
                             </div>
                           )}
                         </div>
@@ -831,7 +831,7 @@ function PatientDashboard() {
             )}
           </div>
 
-          {/* ── Visit History ─────────────────────────────────────── */}
+          {/* â”€â”€ Visit History â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {(pastAppts.length > 0 || !appointmentsLoading) && (
             <div className="glass-panel p-6 rounded-2xl">
               <h3 className="text-xl font-bold mb-4">Visit History</h3>
@@ -920,7 +920,7 @@ function PatientDashboard() {
                                     <div className="space-y-1">
                                       {appt.prescriptionJson.map((med, idx) => (
                                         <div key={idx} className="text-[11px] text-slate-300">
-                                          • <span className="font-bold text-white">{med.medicineName}</span> ({med.dosage}) — {med.frequencyPerDay}x/day for {med.durationDays} days
+                                          â€¢ <span className="font-bold text-white">{med.medicineName}</span> ({med.dosage}) â€” {med.frequencyPerDay}x/day for {med.durationDays} days
                                         </div>
                                       ))}
                                     </div>
@@ -1065,7 +1065,7 @@ function PatientDashboard() {
             )}
           </div>
 
-          {/* Active Prescriptions — sourced from COMPLETED appointments */}
+          {/* Active Prescriptions â€” sourced from COMPLETED appointments */}
           {(() => {
             // Collect all prescriptions from completed appointments that have real prescription rows
             const allRx = appointments
@@ -1090,8 +1090,8 @@ function PatientDashboard() {
                             <span className="text-[10px] font-mono bg-brand-500/10 text-brand-300 border border-brand-500/20 px-2 py-0.5 rounded-full">{rx.dosage}</span>
                           </div>
                           <div className="flex flex-wrap gap-3 text-[11px] text-slate-400">
-                            <span>🔁 {rx.frequencyPerDay}x / day</span>
-                            <span>📅 {rx.durationDays} days</span>
+                            <span>ðŸ” {rx.frequencyPerDay}x / day</span>
+                            <span>ðŸ“… {rx.durationDays} days</span>
                           </div>
                           {nextDose ? (
                             <div className="flex items-center gap-1.5 mt-1.5 text-[11px] text-emerald-400 font-medium">
@@ -1245,7 +1245,7 @@ function DoctorDashboard() {
   const { token } = useAuth();
 
   const handleCalendarConnect = () => {
-    window.location.href = `http://localhost:5000/api/auth/google/connect?token=${token}`;
+    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/auth/google/connect?token=${token}`;
   };
 
   const handleCalendarDisconnect = async () => {
@@ -1396,7 +1396,7 @@ function DoctorDashboard() {
                                   <div className="space-y-1">
                                     {appt.prescriptionJson.map((med, idx) => (
                                       <div key={idx} className="text-[11px] text-slate-300">
-                                        • <span className="font-bold text-white">{med.medicineName}</span> ({med.dosage}) — {med.frequencyPerDay}x/day for {med.durationDays} days
+                                        â€¢ <span className="font-bold text-white">{med.medicineName}</span> ({med.dosage}) â€” {med.frequencyPerDay}x/day for {med.durationDays} days
                                       </div>
                                     ))}
                                   </div>
@@ -1405,7 +1405,7 @@ function DoctorDashboard() {
                             </div>
                           )}
 
-                          {/* Complete Appointment Form — stopPropagation prevents clicks from bubbling
+                          {/* Complete Appointment Form â€” stopPropagation prevents clicks from bubbling
                                up to the card's expand toggle, fixing input collapse + stale-notes bugs */}
                           {appt.status === 'CONFIRMED' && (
                             <div
@@ -1436,14 +1436,14 @@ function DoctorDashboard() {
                                     {prescriptionList.map((med, idx) => (
                                       <div key={idx} className="flex justify-between items-center text-xs bg-slate-900 px-2 py-1 rounded">
                                         <span>
-                                          <strong className="text-slate-200">{med.medicineName}</strong> ({med.dosage}) — {med.frequencyPerDay}x/day for {med.durationDays}d
+                                          <strong className="text-slate-200">{med.medicineName}</strong> ({med.dosage}) â€” {med.frequencyPerDay}x/day for {med.durationDays}d
                                         </span>
                                         <button
                                           type="button"
                                           onClick={() => handleRemoveMedication(idx)}
                                           className="text-red-400 hover:text-red-300 font-bold px-1.5"
                                         >
-                                          ×
+                                          Ã—
                                         </button>
                                       </div>
                                     ))}
@@ -1669,7 +1669,7 @@ function DoctorDashboard() {
                                   <div className="space-y-1">
                                     {appt.prescriptionJson.map((med, idx) => (
                                       <div key={idx} className="text-[11px] text-slate-300">
-                                        • <span className="font-bold text-white">{med.medicineName}</span> ({med.dosage}) — {med.frequencyPerDay}x/day for {med.durationDays} days
+                                        â€¢ <span className="font-bold text-white">{med.medicineName}</span> ({med.dosage}) â€” {med.frequencyPerDay}x/day for {med.durationDays} days
                                       </div>
                                     ))}
                                   </div>
@@ -1678,7 +1678,7 @@ function DoctorDashboard() {
                             </div>
                           )}
 
-                          {/* Complete Appointment Form — stopPropagation prevents clicks from bubbling
+                          {/* Complete Appointment Form â€” stopPropagation prevents clicks from bubbling
                                up to the card's expand toggle, fixing input collapse + stale-notes bugs */}
                           {appt.status === 'CONFIRMED' && (
                             <div
@@ -1709,14 +1709,14 @@ function DoctorDashboard() {
                                     {prescriptionList.map((med, idx) => (
                                       <div key={idx} className="flex justify-between items-center text-xs bg-slate-900 px-2 py-1 rounded">
                                         <span>
-                                          <strong className="text-slate-200">{med.medicineName}</strong> ({med.dosage}) — {med.frequencyPerDay}x/day for {med.durationDays}d
+                                          <strong className="text-slate-200">{med.medicineName}</strong> ({med.dosage}) â€” {med.frequencyPerDay}x/day for {med.durationDays}d
                                         </span>
                                         <button
                                           type="button"
                                           onClick={() => handleRemoveMedication(idx)}
                                           className="text-red-400 hover:text-red-300 font-bold px-1.5"
                                         >
-                                          ×
+                                          Ã—
                                         </button>
                                       </div>
                                     ))}
@@ -1828,7 +1828,7 @@ function DoctorDashboard() {
             )}
           </div>
 
-          {/* ── Past Appointments (Doctor) ───────────────────────── */}
+          {/* â”€â”€ Past Appointments (Doctor) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {pastDoctorAppts.length > 0 && (
             <div className="glass-panel p-6 rounded-2xl border border-slate-800">
               <h3 className="text-xl font-bold mb-4">Past Appointments</h3>
@@ -2232,7 +2232,7 @@ function AdminDashboard() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
+                      placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                       className="block w-full px-3 py-2 border border-slate-800 bg-slate-950 rounded-lg text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                     />
                   </div>
@@ -2586,14 +2586,14 @@ function AdminDashboard() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-lg font-bold text-white">Notification Log</h3>
-            <p className="text-xs text-slate-500 mt-0.5">Last 200 entries · FAILED rows need attention</p>
+            <p className="text-xs text-slate-500 mt-0.5">Last 200 entries Â· FAILED rows need attention</p>
           </div>
           <button
             onClick={loadNotifLogs}
             disabled={notifLoading}
             className="text-[10px] text-slate-400 hover:text-slate-200 font-mono border border-slate-800 hover:border-slate-700 px-2.5 py-1 rounded transition disabled:opacity-50"
           >
-            {notifLoading ? 'Refreshing...' : '↻ Refresh'}
+            {notifLoading ? 'Refreshing...' : 'â†» Refresh'}
           </button>
         </div>
 
@@ -2634,14 +2634,14 @@ function AdminDashboard() {
                       </td>
                       <td className="px-4 py-3 font-mono text-[11px] text-brand-400">{log.type}</td>
                       <td className="px-4 py-3 font-medium text-slate-400">{log.channel}</td>
-                      <td className="px-4 py-3">{log.patientName ? `${log.patientName} (${log.patientEmail || ''})` : '—'}</td>
-                      <td className="px-4 py-3">{log.doctorName ? `Dr. ${log.doctorName}` : '—'}</td>
+                      <td className="px-4 py-3">{log.patientName ? `${log.patientName} (${log.patientEmail || ''})` : 'â€”'}</td>
+                      <td className="px-4 py-3">{log.doctorName ? `Dr. ${log.doctorName}` : 'â€”'}</td>
                       <td className="px-4 py-3 text-center font-mono font-bold text-slate-400">{log.attempts}</td>
                       <td className="px-4 py-3 text-slate-500 font-mono">
                         {new Date(log.createdAt).toLocaleString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </td>
                       <td className="px-4 py-3 text-red-400 max-w-[250px] truncate" title={log.lastError || ''}>
-                        {log.lastError || '—'}
+                        {log.lastError || 'â€”'}
                       </td>
                     </tr>
                   );
@@ -2707,3 +2707,5 @@ export default function App() {
     </AuthProvider>
   );
 }
+
+

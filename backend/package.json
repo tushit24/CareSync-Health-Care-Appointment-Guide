@@ -4,7 +4,7 @@
   "description": "Backend services for the Healthcare Appointment & Follow-up Manager",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "prisma generate && prisma migrate deploy && node src/index.js",
     "dev": "nodemon src/index.js",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev"

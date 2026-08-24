@@ -2,6 +2,10 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
+// In production VITE_API_URL is set to the Render backend URL (e.g. https://caresync-api.onrender.com).
+// In local dev it is empty so the Vite dev-server proxy transparently forwards /api/* to localhost:5000.
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
@@ -18,13 +22,12 @@ export function AuthProvider({ children }) {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(url, {
+    const response = await fetch(`${API_BASE}${url}`, {
       ...options,
       headers,
     });
 
     if (response.status === 401 || response.status === 403) {
-      // If token becomes invalid or expired, clear session
       logout();
     }
 
@@ -41,7 +44,7 @@ export function AuthProvider({ children }) {
       }
 
       try {
-        const response = await fetch('/api/auth/me', {
+        const response = await fetch(`${API_BASE}/api/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -52,12 +55,10 @@ export function AuthProvider({ children }) {
           const data = await response.json();
           setUser(data.user);
         } else {
-          // Token is invalid/expired
           logout();
         }
       } catch (error) {
         console.error('Failed to verify token:', error);
-        // Keep token but stop loading (could be network issue)
       } finally {
         setLoading(false);
       }
@@ -69,19 +70,14 @@ export function AuthProvider({ children }) {
   // Login handler
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
-      }
+      if (!response.ok) throw new Error(data.error || 'Login failed');
 
       localStorage.setItem('token', data.token);
       setToken(data.token);
@@ -96,19 +92,14 @@ export function AuthProvider({ children }) {
   // Register handler
   const register = async (name, email, password, role, phone) => {
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch(`${API_BASE}/api/auth/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, role, phone }),
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Registration failed');
-      }
+      if (!response.ok) throw new Error(data.error || 'Registration failed');
 
       localStorage.setItem('token', data.token);
       setToken(data.token);
@@ -129,26 +120,17 @@ export function AuthProvider({ children }) {
 
   const getRedirectPath = (role) => {
     switch (role) {
-      case 'ADMIN':
-        return '/admin';
-      case 'DOCTOR':
-        return '/doctor';
-      case 'PATIENT':
-        return '/patient';
-      default:
-        return '/login';
+      case 'ADMIN':   return '/admin';
+      case 'DOCTOR':  return '/doctor';
+      case 'PATIENT': return '/patient';
+      default:        return '/login';
     }
   };
 
   const value = {
-    user,
-    token,
-    loading,
-    login,
-    register,
-    logout,
-    fetchWithAuth,
-    getRedirectPath,
+    user, token, loading,
+    login, register, logout,
+    fetchWithAuth, getRedirectPath,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -156,8 +138,6 @@ export function AuthProvider({ children }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 }

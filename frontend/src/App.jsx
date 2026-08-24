@@ -1,4 +1,4 @@
-﻿import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Calendar, User, Shield, Stethoscope, LogIn, UserPlus, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -187,7 +187,7 @@ function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full px-3 py-2.5 border border-slate-800 bg-slate-900 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm transition pr-10"
-                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                  placeholder="********"
                 />
                 <button
                   type="button"
@@ -343,7 +343,7 @@ function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 border border-slate-800 bg-slate-900 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm transition"
-                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                placeholder="********"
               />
             </div>
 
@@ -2232,7 +2232,7 @@ function AdminDashboard() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                      placeholder="********"
                       className="block w-full px-3 py-2 border border-slate-800 bg-slate-950 rounded-lg text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
                     />
                   </div>

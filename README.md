@@ -2,6 +2,8 @@
 
 CareSync is an end-to-end healthcare management platform that connects patients, doctors, and administrators. It features real-time slot reservation, double-booking prevention, LLM-powered symptom triage & clinical summary generation, automated email notifications, background medication reminders, and two-way Google Calendar synchronization via OAuth 2.0.
 
+> 🚀 **Live Demo:** [**https://care-sync-health-care-appointment-g.vercel.app/login**](https://care-sync-health-care-appointment-g.vercel.app/login)
+
 ---
 
 ## 🛠 Tech Stack

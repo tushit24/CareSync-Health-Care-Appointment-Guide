@@ -68,7 +68,7 @@ For grading convenience, the seed script creates:
 - Email: admin@caresync.com
 - Password: AdminPassword123!
 
-You can also register your own patient/doctor accounts through the app's normal sign-up flow.
+You can also register your own patient accounts through the app's normal sign-up flow.
 
 ---
 

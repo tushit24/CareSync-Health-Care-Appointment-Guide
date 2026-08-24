@@ -60,20 +60,21 @@ pnpm run dev
 
 Visit `http://localhost:5173` in your browser.
 
-### 4. Demo Credentials (Seed Data)
-If you ran `node src/seed.js`, you can log in immediately with the following default accounts to test the application:
+### 4. Demo / Test Credentials
 
-- **Admin Account**
-  - Email: `admin@caresync.com`
-  - Password: `AdminPassword123!`
+For grading convenience, the seed script creates:
 
-- **Doctor Account** (Example)
-  - Email: `dr.smith@caresync.com`
-  - Password: `DoctorPassword123!`
+**Admin**
+- Email: admin@caresync.com
+- Password: AdminPassword123!
 
-- **Patient Account** (Example)
-  - Email: `john.doe@example.com`
-  - Password: `PatientPassword123!`
+You can also register your own patient/doctor accounts through the app's normal sign-up flow.
+
+---
+
+## ⚠️ Known Limitations
+
+- The deployed backend runs on Render's free tier, which spins down after ~15 minutes of inactivity. A background uptime monitor pings it periodically to keep cron jobs (notification retries, hold-release, medication reminders) running reliably.
 
 ---
 

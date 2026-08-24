@@ -33,7 +33,7 @@ cd healthcare_appointment_guide
 ### 2. Backend Setup & Database Migration
 ```bash
 cd backend
-npm install
+pnpm install
 
 # Copy environment template
 cp .env.example .env
@@ -46,19 +46,34 @@ npx prisma migrate dev
 node src/seed.js
 
 # Start backend dev server (runs on port 5000)
-npm run dev
+pnpm run dev
 ```
 
 ### 3. Frontend Setup
 ```bash
 cd ../frontend
-npm install
+pnpm install
 
 # Start frontend dev server (runs on port 5173)
-npm run dev
+pnpm run dev
 ```
 
 Visit `http://localhost:5173` in your browser.
+
+### 4. Demo Credentials (Seed Data)
+If you ran `node src/seed.js`, you can log in immediately with the following default accounts to test the application:
+
+- **Admin Account**
+  - Email: `admin@caresync.com`
+  - Password: `AdminPassword123!`
+
+- **Doctor Account** (Example)
+  - Email: `dr.smith@caresync.com`
+  - Password: `DoctorPassword123!`
+
+- **Patient Account** (Example)
+  - Email: `john.doe@example.com`
+  - Password: `PatientPassword123!`
 
 ---
 
@@ -74,7 +89,7 @@ NODE_ENV=development
 # Database Connection (Neon PostgreSQL)
 # Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=public
 # DATABASE_URL uses Neon PgBouncer pooler for runtime query execution
-DATABASE_URL="postgresql://neondb_owner:password@ep-sample-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=60&connection_limit=1&pool_timeout=0"
+DATABASE_URL="postgresql://neondb_owner:password@ep-sample-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&pgbouncer=true&connect_timeout=60"
 
 # DIRECT_URL bypasses PgBouncer and is used exclusively by Prisma Migrate
 DIRECT_URL="postgresql://neondb_owner:password@ep-sample.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&connect_timeout=60"

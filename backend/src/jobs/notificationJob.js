@@ -1,7 +1,7 @@
 /**
  * notificationJob.js
  * ------------------
- * Processes pending notification_log rows every 5 minutes.
+ * Processes pending notification_log rows every 15 minutes.
  *
  * EMAIL channel: sends real emails via emailService.
  * CALENDAR channel: creates/deletes Google Calendar events via calendarService.
@@ -164,7 +164,7 @@ async function processCalendarLog(log) {
 // ─── Main cron ────────────────────────────────────────────────────────────────
 
 const startNotificationWorker = () => {
-  cron.schedule('*/5 * * * *', async () => {
+  cron.schedule('*/15 * * * *', async () => {
     try {
       const pendingLogs = await prisma.notificationLog.findMany({
         where: {
@@ -233,7 +233,7 @@ const startNotificationWorker = () => {
     }
   });
 
-  console.log('[Notification Worker] Scheduled — runs every 5 minutes.');
+  console.log('[Notification Worker] Scheduled — runs every 15 minutes.');
 };
 
 module.exports = { startNotificationWorker };
